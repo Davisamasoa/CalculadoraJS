@@ -183,9 +183,14 @@ button:hover{
 }
 
 @media (max-width: 500px) {
+    body{
+        height: 90vh;
+    }
+
     main {
         width: 350px;
         min-height: 555px;
+        margin-top: -70px;
     }
     
     header {
