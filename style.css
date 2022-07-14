@@ -1,0 +1,229 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Calculator;
+    src: url(./font/Calculator.ttf);
+}
+
+body{
+    height: 100vh;
+    background-color: rgba(15, 15, 15, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    top: 12%;
+    color: rgb(231, 228, 228);
+    font-family:'Courier New', Courier, monospace;
+}
+
+footer p{
+    margin: 0;
+}
+
+footer div{
+    margin: 2px;
+}
+
+footer div:hover{
+    opacity: 0.8;
+}
+
+footer img{
+    width: 30px;
+
+}
+
+main {
+    width: 420px;
+    min-height: 573px;
+    background-color: rgb(22, 22, 22);
+    border: 0.1px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    height: 130px;
+    width: 374px;
+    background-color: rgb(176, 230, 235);
+    opacity: 0.9;
+    margin-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    flex-direction: column;
+}
+
+.dateTime-container{
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.date-item{
+    font-family: Calculator;
+    width: 50%;
+    font-size: 1.4em;
+}
+
+.time{
+    margin-left: 3%;
+}
+
+.date{
+    margin-left: 42%;
+}
+
+.output-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.output-number{
+    margin-right: 5px;
+    margin-bottom: 2px;
+    font-family: Calculator;
+    font-size: 4em;
+    justify-self: flex-end;
+}
+
+.botoesdecima{
+    width: 380px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    place-items: center;
+    place-content: center;
+    column-gap: 0px;
+}
+
+.botoesdebaixo{
+    width: 380px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    place-items: center;
+    place-content: center;
+
+}
+
+.botoesdebaixo-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 8px;
+}
+
+button{
+    width: 87px;
+    height: 72px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 2em;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(240, 236, 236);
+}
+
+button:hover{
+    opacity: 0.8;
+}
+
+.botaoMais{
+    height: 150px;
+}
+
+.botaoAC{
+    background-color: rgb(212, 39, 39);
+}
+
+.botaoCE{
+    background-color: rgb(235, 165, 13);
+}
+
+.botaoPorcentagem{
+    background-color: rgb(46, 109, 226);
+}
+
+.botaoDivisao{
+    background-color: rgb(214, 52, 141);
+}
+
+.botaoMultiplicaçao{
+    background-color: rgb(211, 238, 59);
+}
+
+.botaoMenos{
+    background-color: rgb(53, 207, 156);
+}
+
+.botaoMais{
+    background-color: rgb(223, 88, 35);
+}
+
+.botaoIgual{
+    background-color: rgb(8, 187, 8);
+}
+
+@media (max-width: 500px) {
+    main {
+        width: 350px;
+        min-height: 555px;
+    }
+    
+    header {
+        height: 115px;
+        width: 315px;
+        margin-top: 20px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+    
+    .botoesdecima, .botoesdebaixo{
+        width: 315px;
+    }
+    
+    button{
+        width: 75px;
+    }
+
+    .dateTime-container{
+        margin-bottom: 35px;
+    }
+
+    .date{
+        margin-left: 45%;
+    }
+
+    .date, .time{
+        font-size: 1.1em;
+    }
+
+    .output-number{
+        font-size: 3em;
+    }
+
+    .botoesdebaixo-grid{
+        column-gap: 4px;
+    }
+    
+}
