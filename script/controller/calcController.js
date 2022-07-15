@@ -1,182 +1,199 @@
 class CalcController {
-    #locale;
-    #timeEl;
-    #dateEl;
-    #displaycalcEl;
-    #currentDate;
-    #operation;
+    #audio;
+    #audioOnOff;
     #lastOperator;
     #lastNumber;
+    #operation;
+    #locale;
+    #displayCalcEl;
+    #dateEl;
+    #timeEl;
+    #currentDate;
 
-    constructor(){
+    constructor() {
+        this.#audio = new Audio('click.mp3');
+        this.#audioOnOff = false;
+        this.#lastOperator = '';
+        this.#lastNumber = '';
         this.#operation = [];
-        this.#locale = "pt-BR";
-        this.#timeEl = document.querySelector(".time");
+        this.#locale = 'pt-BR';
+        this.#displayCalcEl = document.querySelector(".display");
         this.#dateEl = document.querySelector(".date");
-        this.#displaycalcEl = document.querySelector(".display");
+        this.#timeEl = document.querySelector(".time");
         this.#currentDate;
         this.initialize();
         this.initButtonsEvents();
-        this.#lastOperator = "";
-        this.#lastNumber = "";
-        this.initKeyboard();    
+        this.initKeyboard();
     }
 
-    pasteFromClipBoard(){
-        document.addEventListener("paste", e=>{
-            let text = e.clipboardData.getData("Text");
+    copyToClipboard() {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(this.displayCalc);
+        }
+    }
+
+    pasteFromClipboard() {
+        document.addEventListener('paste', e => {
+            let text = e.clipboardData.getData('Text');
             this.displayCalc = parseFloat(text);
-            console.log(text);
+        });
 
-        })
     }
 
-
-    initialize(){
+    initialize() {
         this.setDisplayDateTime();
-        setInterval(()=>{
+        setInterval(() => {
             this.setDisplayDateTime();
         }, 1000);
         this.setLastNumberToDisplay();
-        this.pasteFromClipBoard();
+        this.pasteFromClipboard();
+        document.querySelectorAll('.btn-ac').forEach(btn => {
+            btn.addEventListener('dblclick', e => {
+                this.toggleAudio();
+            });
+        });
     }
 
-    initKeyboard(){
-        document.addEventListener("keyup", e=> {
+    toggleAudio() {
+        this.#audioOnOff = !this.#audioOnOff;
+    }
+
+    playAudio() {
+        if (this.#audioOnOff) {
+            this.#audio.currentTime = 0;
+            this.#audio.play();
+        }
+    }
+
+    initKeyboard() {
+        document.addEventListener('keyup', e => {
+            this.playAudio();
             switch (e.key) {
-            
-                case "Escape":
-                    this.clearAll()
+                case 'Escape':
+                    this.clearAll();
                     break;
-                
-                case "Backspace":
+                case 'Backspace':
                     this.clearEntry();
                     break;
-    
-                case "c":
-                    if(e.ctrlKey) this.copyToClipBoard();
-                    break;
-
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                case "%":
+                case '+':
+                case '-':
+                case '*':
+                case '/':
+                case '%':
                     this.addOperation(e.key);
                     break;
-    
-                case "Enter":
-                case "=":
+                case 'Enter':
+                case '=':
                     this.calc();
                     break;
-    
-                case ".":
-                case ",":
-                    this.addDot(".");
+                case '.':
+                case ',':
+                    this.addDot();
                     break;
-    
-                case "0":
-                case "1":
-                case "2":
-                case "3":
-                case "4":
-                case "5":
-                case "6":
-                case "7":
-                case "8":
-                case "9":
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
                     this.addOperation(parseInt(e.key));
                     break;
-            }
-        }
-        )
-    };
 
-    
-    addEventListenerAll(element, events, fn){
-        events.split(" ").forEach(event => {
-            element.addEventListener(event, fn, false);
+                case 'c':
+                    if (e.ctrlKey) this.copyToClipboard();
+                    break;              
+            }
         });
-    };
-    
-    clearAll(){
+
+    }
+
+    addEventListenerAll(element, events, fn) {
+        events.split(' ').forEach(event => {
+            element.addEventListener(event, fn, false);
+
+        });
+    }
+
+    clearAll() {
         this.#operation = [];
-        this.#lastNumber = "";
-        this.#lastOperator = "";
+        this.#lastNumber = '';
+        this.#lastOperator = '';
         this.setLastNumberToDisplay();
     }
 
-    clearEntry(){
+    clearEntry() {
         this.#operation.pop();
         this.setLastNumberToDisplay();
     }
 
-    getLastOperation(){
+    getLastOperation() {
         return this.#operation[this.#operation.length - 1];
     }
 
-    setLastOperation(value){
-        this.#operation[this.#operation.length - 1] = value;
-    }
-    
-    isOperator(value){
-        return (["+", "-", "*", "%", "/"].indexOf(value) > -1);       
+    setLastOperation(value) {
+       this.#operation[this.#operation.length - 1] = value;
     }
 
-    pushOperation(value){
+    isOperator(value) {
+        return (['+', '-', '*', '%', '/'].indexOf(value) > -1);
+    }
+
+    pushOperation(value) {
         this.#operation.push(value);
         if (this.#operation.length > 3) {
             this.calc();
         }
     }
-    
-    getResult(){
-        try{
-        return eval(this.#operation.join(""));
-        } catch(e){
-          setTimeout(() => {
-            this.setError();
-          }, 0.5);
+
+    getResult() {
+        try {
+            return eval(this.#operation.join(""));
+        } catch (e) {
+            setTimeout(() => this.setError(), 1);
         }
     }
-    
-    calc(){
-        let last = "";
+
+    calc() {
+        let last = '';
         this.#lastOperator = this.getLastItem();
         
         if (this.#operation.length < 3) {
             let firstItem = this.#operation[0];
             this.#operation = [firstItem, this.#lastOperator, this.#lastNumber];
         }
-        
+
         if (this.#operation.length > 3) {
             last = this.#operation.pop();
             this.#lastNumber = this.getResult();
-        }
 
-        else if (this.#operation.length == 3) {
-            this.#lastNumber = this.getLastItem(false );
+        } else if (this.#operation.length === 3) {
+            this.#lastNumber = this.getLastItem(false);
         }
 
         let result = this.getResult();
-        
-        if (last == "%") {
+
+        if (last === '%') {
             result /= 100;
             this.#operation = [result];
-        } else{
+        } else {
             this.#operation = [result];
+
             if (last) this.#operation.push(last);
         }
 
         this.setLastNumberToDisplay();
     }
 
-    getLastItem(isOperator = true){
+    getLastItem(isOperator = true) {
 
         let lastItem;
-        
-        for (let i = this.#operation.length-1; i >= 0; i--){
-            if (this.isOperator(this.#operation[i]) == isOperator) {
+
+        for (let i = this.#operation.length - 1; i >= 0; i--) {
+            if (this.isOperator(this.#operation[i]) === isOperator) {
                 lastItem = this.#operation[i];
                 break;
             }
@@ -186,36 +203,32 @@ class CalcController {
             lastItem = (isOperator) ? this.#lastOperator : this.#lastNumber;
         }
 
-        if (!lastItem){
-            lastItem = (isOperator) ? this.#lastOperator : this.#lastNumber;
-        }
-
         return lastItem;
     }
-    
-    setLastNumberToDisplay(){
+
+    setLastNumberToDisplay() {
         let lastNumber = this.getLastItem(false);
-        if(!lastNumber) lastNumber = 0;
+        if (!lastNumber) lastNumber = 0;
         this.displayCalc = lastNumber;
     }
     
-    addOperation(value){
-        
+    addOperation(value) {
+
         if (isNaN(this.getLastOperation())) {
             if (this.isOperator(value)) {
                 this.setLastOperation(value);
-            } 
-            
-            else {
+
+            } else {
                 this.pushOperation(value);
                 this.setLastNumberToDisplay();
             }
-        } 
-        
-        else {
-            if(this.isOperator(value)) {
+
+        } else {
+
+            if (this.isOperator(value)) {
                 this.pushOperation(value);
-            } else{
+
+            } else {
                 let newValue = this.getLastOperation().toString() + value.toString();
                 this.setLastOperation(newValue);
                 this.setLastNumberToDisplay();
@@ -223,28 +236,24 @@ class CalcController {
         }
     }
 
-    get arrayOperation(){
-        return this.#operation;
+    setError() {
+        this.displayCalc = "Error";
     }
 
-    addDot(){
-        let lastOperation = this.getLastOperation();
+    addDot() {
 
-        if(typeof lastOperation === "string" && lastOperation.split("").indexOf (".") > -1) return;
-       
-       
-        if(this.isOperator(lastOperation) || !lastOperation) {
-            this.pushOperation("0.");
+        let lastOperation = this.getLastOperation();
+        if (typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
+        
+        if (this.isOperator(lastOperation) || !lastOperation) {
+            this.setLastOperation('0.');
         } else {
-            this.setLastOperation(lastOperation.toString() + ".");
+            this.setLastOperation(lastOperation.toString() + '.');
         }
+
         this.setLastNumberToDisplay();
     }
-    
-    setError (){
-        this.displayCalc = "ERROR";
-    }
-    
+
     execBtn(value){
         switch (value) {
             
@@ -284,7 +293,6 @@ class CalcController {
                 this.addDot(".");
                 break;
 
-
             case "0":
             case "1":
             case "2":
@@ -303,55 +311,61 @@ class CalcController {
                 break;
         }
     }
-    
-    initButtonsEvents(){
+
+
+    initButtonsEvents() {
         let buttons = document.querySelectorAll("button");
-        buttons.forEach((btn, index)=>{
-            this.addEventListenerAll(btn, "click drag", e=>{
+        buttons.forEach((btn, index) => {
+            this.addEventListenerAll(btn, 'click drag', e => {
                 let textBtn = btn.className.replace("botao", "");
                 this.execBtn(textBtn);
-            })
-        })
-    };
+            });
+        });
 
-    setDisplayDateTime(){
-        this.displayDate = this.currentDate.toLocaleDateString(this.#locale);
+    }
+
+    setDisplayDateTime() {
+        this.displayDate = this.currentDate.toLocaleDateString(this.#locale,);
         this.displayTime = this.currentDate.toLocaleTimeString(this.#locale);
     }
 
-    get displayTime(){
+    get displayTime() {
         return this.#timeEl.innerHTML;
     }
-    
-    set displayTime(value){
+
+    set displayTime(value) {
         this.#timeEl.innerHTML = value;
     }
-    
-    get displayDate(){
+
+    get displayDate() {
         return this.#dateEl.innerHTML;
     }
-    
-    set displayDate(value){
+
+    set displayDate(value) {
         this.#dateEl.innerHTML = value;
     }
 
-    get displayCalc(){
-        return this.#displaycalcEl.innerHTML;
+    get displayCalc() {
+
+        return this.#displayCalcEl.innerHTML;
+
     }
 
-    set displayCalc(value){
-        if (value.toString().length > 13) {
+    set displayCalc(value) {
+
+        if (value.toString().length > 10) {
             this.setError();
             return false;
         }
-        this.#displaycalcEl.innerHTML = value;
+        this.#displayCalcEl.innerHTML = value;  
     }
 
-    get currentDate(){
+    get currentDate() {
         return new Date();
-    };
-
-    set currentDate(value){
-        this.#currentDate.innerHTML = value;
     }
+
+    set currentDate(value) {
+        this.#currentDate = value;
+    }
+
 }
