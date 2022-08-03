@@ -47,7 +47,7 @@ class CalcController {
         }, 1000);
         this.setLastNumberToDisplay();
         this.pasteFromClipboard();
-        document.querySelectorAll('.btn-ac').forEach(btn => {
+        document.querySelectorAll('.botaoAC').forEach(btn => {
             btn.addEventListener('dblclick', e => {
                 this.toggleAudio();
             });
