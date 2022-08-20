@@ -354,7 +354,7 @@ class CalcController {
     set displayCalc(value) {
 
         if (value.toString().length > 14) {
-            this.#displayCalcEl.innerHTML = Number(value.toPrecision(14));
+            this.#displayCalcEl.innerHTML = Number(value.toPrecision(13));
             return false;
         }
 
