@@ -4,6 +4,8 @@
 	box-sizing: border-box;
 }
 
+$primary-color: rgb(48, 247, 230);
+
 @font-face {
 	font-family: Calculator;
 	src: url(../font/Calculator.ttf);
@@ -11,7 +13,7 @@
 
 body {
 	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgb(0, 0, 0);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -52,9 +54,9 @@ footer i {
 main {
 	width: 420px;
 	min-height: 573px;
-	background-color: rgb(22, 22, 22);
+	background-color: rgb(0, 0, 0);
 	border: none;
-	box-shadow: 0px 0px 5px rgb(131, 128, 128);
+	box-shadow: 0px 0px 50px rgb(78, 78, 78);
 	border-radius: 20px;
 	display: flex;
 	justify-content: flex-start;
