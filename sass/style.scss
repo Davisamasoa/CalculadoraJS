@@ -54,9 +54,9 @@ footer i {
 main {
 	width: 420px;
 	min-height: 573px;
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(41, 40, 40);
 	border: none;
-	box-shadow: 0px 0px 50px rgb(78, 78, 78);
+
 	border-radius: 20px;
 	display: flex;
 	justify-content: flex-start;
@@ -143,7 +143,12 @@ button {
 	font-size: 2em;
 	border: none;
 	cursor: pointer;
-	background-color: rgb(240, 236, 236);
+	background-color: rgb(24, 23, 23);
+	color: white;
+}
+
+button:hover {
+	border: 2px solid white;
 }
 
 button:focus {
@@ -170,34 +175,42 @@ button:focus {
 
 .botaoAC {
 	background-color: rgb(212, 39, 39);
+	color: black;
 }
 
 .botaoCE {
 	background-color: rgb(235, 165, 13);
+	color: black;
 }
 
 .botaoPorcentagem {
 	background-color: rgb(46, 109, 226);
+	color: black;
 }
 
 .botaoDivisao {
 	background-color: rgb(214, 52, 141);
+	color: black;
 }
 
 .botaoMultiplicaçao {
 	background-color: rgb(211, 238, 59);
+	color: black;
 }
 
 .botaoMenos {
 	background-color: rgb(53, 207, 156);
+	color: black;
 }
 
 .botaoMais {
 	background-color: rgb(223, 88, 35);
+	color: black;
 }
 
 .botaoIgual {
 	background-color: rgb(8, 187, 8);
+	color: black;
 }
 
 @media (max-width: 500px) {
