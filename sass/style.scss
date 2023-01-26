@@ -213,20 +213,16 @@ button:focus {
 	color: black;
 }
 
-@media (max-width: 500px) {
-	body {
-		height: 90vh;
-	}
-
+@media (max-width: 1500px) {
 	main {
 		width: 350px;
 		min-height: 555px;
-		margin-top: -7%;
+		margin-top: 20px;
 	}
 
 	header {
-		height: 115px;
-		width: 315px;
+		height: 100px;
+		width: 300px;
 		margin-top: 20px;
 		border-radius: 10px;
 		display: flex;
@@ -236,15 +232,15 @@ button:focus {
 
 	.botoesdecima,
 	.botoesdebaixo {
-		width: 315px;
+		width: 300px;
 	}
 
 	button {
-		width: 75px;
+		width: 71px;
 	}
 
 	.dateTime-container {
-		margin-bottom: 35px;
+		margin-bottom: 20px;
 	}
 
 	.date {
@@ -262,5 +258,9 @@ button:focus {
 
 	.botoesdebaixo-grid {
 		column-gap: 4px;
+	}
+
+	footer {
+		top: 5%;
 	}
 }
