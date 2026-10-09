@@ -11,7 +11,7 @@ class CalcController {
     #currentDate;
 
     constructor() {
-        this.#audio = new Audio('click.mp3');
+        this.#audio = new Audio('Click.mp3');
         this.#audioOnOff = false;
         this.#lastOperator = '';
         this.#lastNumber = '';
